@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="F_Main.Views.FridgeViews.FridgeView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:F_Framework.Models;assembly=F_Framework"
+    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+    xmlns:title="clr-namespace:F_Main.CustomControllers"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:F_Framework.ViewModels.FridgeViewModels;assembly=F_Framework"
+    x:Name="ThisPage"
+    x:DataType="vm:FridgeViewModel"
+    Background="{StaticResource PageColor}"
+    Shell.NavBarIsVisible="True">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding GetAllProductsCommand}" EventName="Appearing" />
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Blue100Accent}" StatusBarStyle="DarkContent" />
+    </ContentPage.Behaviors>
+    <Shell.TitleView>
+        <title:TitleViewControlller />
+    </Shell.TitleView>
+
+    <ContentPage.Content>
+        <CollectionView
+            x:Name="FridgeCollection"
+            ItemsSource="{Binding ProductsInFridge, Mode=TwoWay}"
+            SelectedItems="{Binding SelectedProducts, Mode=TwoWay}"
+            SelectionChangedCommand="{Binding AddSelectedProducts}"
+            SelectionChangedCommandParameter="{Binding Path=SelectedItems, Source={x:Reference FridgeCollection}, Mode=OneWay}"
+            SelectionMode="Multiple">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="4" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Product">
+                    <Grid>
+
+                        <Border
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="5"
+                            HorizontalOptions="Center"
+                            Stroke="#C49B33"
+                            StrokeShape="RoundRectangle 5,5,5,5"
+                            StrokeThickness="1">
+                            <VerticalStackLayout BackgroundColor="{StaticResource Yellow200Accent}" Opacity="{Binding ExpirationDate, Converter={x:StaticResource DateToOpacity}}">
+
+                                <Image
+                                    HeightRequest="50"
+                                    Source="{Binding Icon}"
+                                    WidthRequest="77" />
+                                <Label HorizontalOptions="Center" Text="{Binding Name}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.Header>
+                <FlexLayout
+                    x:Name="FridgeEditMenu"
+                    Margin="5"
+                    AlignItems="Center"
+                    JustifyContent="Center"
+                    MaximumHeightRequest="55"
+                    MaximumWidthRequest="400">
+
+                    <ImageButton
+                        Margin="5"
+                        Command="{Binding ToDetailsView}"
+                        HeightRequest="50"
+                        IsEnabled="False"
+                        Opacity=".3"
+                        Source="edit.svg"
+                        WidthRequest="45">
+                        <ImageButton.Triggers>
+                            <DataTrigger
+                                Binding="{Binding Source={x:Reference FridgeCollection}, Path=SelectedItems.Count}"
+                                TargetType="ImageButton"
+                                Value="1">
+                                <Setter Property="IsEnabled" Value="True" />
+                                <Setter Property="Opacity" Value="1" />
+                            </DataTrigger>
+                        </ImageButton.Triggers>
+                    </ImageButton>
+
+                    <ImageButton
+                        Margin="5"
+                        Command="{Binding DeleteProductFromFridge}"
+                        HeightRequest="50"
+                        Source="bin2.svg"
+                        WidthRequest="55" />
+                    <ImageButton
+                        Margin="5"
+                        Command="{Binding UpdateProductNotification}"
+                        HeightRequest="50"
+                        Source="bellon.svg"
+                        WidthRequest="55" />
+
+                    <ImageButton
+                        Margin="5"
+                        Command="{Binding TurnOffProductNotification}"
+                        HeightRequest="50"
+                        Source="belloff.svg"
+                        WidthRequest="55" />
+                    <FlexLayout.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference FridgeCollection}, Path=SelectedItems.Count}"
+                            TargetType="FlexLayout"
+                            Value="0">
+                            <Setter Property="IsVisible" Value="False" />
+                            <Setter Property="HeightRequest" Value="0" />
+                        </DataTrigger>
+                    </FlexLayout.Triggers>
+                </FlexLayout>
+            </CollectionView.Header>
+            <CollectionView.EmptyView>
+                <ContentView
+                    Margin="5"
+                    HorizontalOptions="Start"
+                    WidthRequest="200">
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Start">
+                        <Label HeightRequest="30" Text="" />
+                        <Label
+                            FontFamily="frmnr"
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="Add Some New Products!"
+                            WidthRequest="200" />
+                        <skia:SKLottieView
+                            HeightRequest="170"
+                            HorizontalOptions="Center"
+                            Progress="1"
+                            RepeatCount="-1"
+                            RepeatMode="Restart"
+                            Source="https://assets7.lottiefiles.com/temp/lf20_QTR8Nb.json"
+                            VerticalOptions="Start"
+                            WidthRequest="200" />
+                    </VerticalStackLayout>
+                </ContentView>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </ContentPage.Content>
+</ContentPage>

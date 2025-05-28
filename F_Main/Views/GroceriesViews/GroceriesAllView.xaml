@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="F_Main.Views.GroceriesViews.GroceriesAllView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:F_Framework.Models;assembly=F_Framework"
+    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+    xmlns:title="clr-namespace:F_Main.CustomControllers"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:F_Framework.ViewModels.GroceriesViewModels;assembly=F_Framework"
+    x:Name="ThisPage"
+    x:DataType="vm:GroceriesViewModel"
+    Background="{StaticResource PageColor}"
+    Shell.NavBarIsVisible="True">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding GetAllGroceriesCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <Shell.TitleView>
+        <title:TitleViewControlller />
+    </Shell.TitleView>
+
+    <ContentPage.Content>
+        <ScrollView>
+
+            <RefreshView Command="{Binding GetAllGroceriesCommand}" IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}">
+
+                <CollectionView
+                    x:Name="GroceryCollection"
+                    ItemsSource="{Binding AllFullGroceries, Mode=TwoWay}"
+                    SelectedItem="{Binding AddedGrocery, Mode=TwoWay}"
+                    SelectionMode="Single">
+
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="1" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:GroceryFull">
+                            <SwipeView>
+                                <SwipeView.LeftItems>
+                                    <SwipeItems>
+                                        <SwipeItem
+                                            x:DataType="model:ShopFull"
+                                            BackgroundColor="LightGreen"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceriesViewModel}, AncestorLevel=1}, Path=ReUseCommand}"
+                                            IconImageSource="reuse.svg"
+                                            Text="Reuse" />
+                                        <SwipeItem
+                                            x:DataType="model:ShopFull"
+                                            BackgroundColor="LightPink"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceriesViewModel}, AncestorLevel=1}, Path=DeleteGroceryCommand}"
+                                            CommandParameter="{Binding .}"
+                                            IconImageSource="bin2.svg"
+                                            Text="Delete" />
+                                    </SwipeItems>
+                                </SwipeView.LeftItems>
+                                <Grid>
+                                    <Border
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="5"
+                                        Padding="3"
+                                        BackgroundColor="{StaticResource Yellow200Accent}"
+                                        HorizontalOptions="FillAndExpand"
+                                        Stroke="#C49B33"
+                                        StrokeShape="RoundRectangle 5,5,5,5"
+                                        StrokeThickness="2">
+
+                                        <VerticalStackLayout>
+                                            <Frame
+                                                Margin="1"
+                                                Padding="1"
+                                                BackgroundColor="{StaticResource Yellow100Accent}">
+                                                <HorizontalStackLayout HorizontalOptions="Center">
+                                                    <Label Text="Added : " TextDecorations="Underline" HorizontalOptions="Center"/>
+                                                    <Label
+                                                        FontAttributes="Italic"
+                                                        HorizontalOptions="Center"
+                                                        Text="{Binding DateAdded}" />
+                                                </HorizontalStackLayout>
+                                            </Frame>
+                                            <Frame
+                                                Margin="2"
+                                                Padding="2"
+                                                BackgroundColor="{StaticResource Yellow200Accent}">
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    HorizontalOptions="Center"
+                                                    Text="Shops" />
+                                            </Frame>
+                                            <CollectionView x:DataType="model:ShopFull" ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type model:GroceryFull}, AncestorLevel=1}, Path=Shops}">
+                                                <!--<CollectionView.GroupHeaderTemplate>
+                                                <DataTemplate x:DataType="model:ShopFull">
+                                                    <Label Text="{Binding Name}"
+                                                       BackgroundColor="LightGray"
+                                                       FontSize="18"
+                                                       FontAttributes="Bold" />
+                                                </DataTemplate>
+                                            </CollectionView.GroupHeaderTemplate>-->
+                                                <CollectionView.ItemsLayout>
+                                                    <GridItemsLayout Orientation="Vertical" Span="5" />
+                                                </CollectionView.ItemsLayout>
+
+                                                <CollectionView.ItemTemplate>
+                                                    <DataTemplate x:DataType="model:ShopFull">
+                                                        <Grid>
+                                                            <Frame
+                                                                Grid.Row="1"
+                                                                Grid.Column="1"
+                                                                Margin="2"
+                                                                Padding="3"
+                                                                BackgroundColor="{StaticResource Yellow200Accent}"
+                                                                HorizontalOptions="Start">
+
+                                                                <VerticalStackLayout BackgroundColor="{StaticResource Yellow100Accent}" Margin="2">
+                                                                    <Label
+                                                                        HorizontalOptions="Center"
+                                                                        Text="{Binding Name}"
+                                                                        TextDecorations="Underline"
+                                                                        TextTransform="Uppercase" />
+                                                                    <CollectionView ItemsSource="{Binding Products}">
+
+                                                                        <CollectionView.ItemsLayout>
+                                                                            <GridItemsLayout Orientation="Horizontal" Span="3" />
+                                                                        </CollectionView.ItemsLayout>
+                                                                        <CollectionView.ItemTemplate>
+                                                                            <DataTemplate x:DataType="model:Product">
+                                                                                <Grid>
+                                                                                    <Frame
+                                                                                        Margin="2"
+                                                                                        Padding="1"
+                                                                                        BackgroundColor="{StaticResource Yellow200Accent}"
+                                                                                        HorizontalOptions="Start">
+                                                                                        <Label HorizontalOptions="Center" Text="{Binding Name}" />
+                                                                                    </Frame>
+                                                                                </Grid>
+                                                                            </DataTemplate>
+                                                                        </CollectionView.ItemTemplate>
+                                                                    </CollectionView>
+                                                                </VerticalStackLayout>
+                                                            </Frame>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </CollectionView.ItemTemplate>
+                                            </CollectionView>
+                                            <Label
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Center"
+                                                Text="Products" />
+                                            <Frame
+                                                Margin="1"
+                                                Padding="1"
+                                                BackgroundColor="{StaticResource Yellow100Accent}">
+                                                <CollectionView ItemsSource="{Binding Products}">
+                                                    <CollectionView.ItemsLayout>
+                                                        <GridItemsLayout Orientation="Vertical" Span="4" />
+                                                    </CollectionView.ItemsLayout>
+                                                    <CollectionView.ItemTemplate>
+                                                        <DataTemplate x:DataType="model:Product">
+                                                            <Grid>
+                                                                <Frame
+                                                                    Margin="2"
+                                                                    Padding="2"
+                                                                    BackgroundColor="{StaticResource Yellow200Accent}"
+                                                                    HorizontalOptions="Start">
+
+                                                                    <Label HorizontalOptions="Center" Text="{Binding Name}" />
+                                                                </Frame>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </CollectionView.ItemTemplate>
+                                                </CollectionView>
+                                            </Frame>
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </Grid>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Start">
+                            <Label HeightRequest="30" Text="" />
+                            <Label
+                                FontFamily="frmnr"
+                                FontSize="20"
+                                HorizontalTextAlignment="Center"
+                                Text="There are no Grocery lists at the moment!" />
+                            <skia:SKLottieView
+                                HeightRequest="300"
+                                HorizontalOptions="Start"
+                                Progress="1"
+                                RepeatCount="-1"
+                                RepeatMode="Restart"
+                                Source="https://assets6.lottiefiles.com/packages/lf20_us78tbqc.json"
+                                VerticalOptions="Start"
+                                WidthRequest="350" />
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </RefreshView>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="F_Main.Views.SettingsViews.LoginView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:title="clr-namespace:F_Main.CustomControllers"
+    Title="LoginView"
+    Background="{StaticResource PageColor}">
+
+
+    <Shell.TitleView>
+        <title:TitleViewControlller />
+    </Shell.TitleView>
+
+    <Grid
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout Grid.Row="0" HorizontalOptions="Center">
+            <Image
+                Margin="0,30"
+                Aspect="AspectFit"
+                HeightRequest="100"
+                Source="dotnet_bot.svg"
+                WidthRequest="80" />
+        </StackLayout>
+
+
+        <Grid
+                Padding="20,50,20,0"
+                HorizontalOptions="FillAndExpand"
+                RowSpacing="20"
+                VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+
+            <Entry
+                    Grid.Row="2"
+                    Margin="0,20,0,0"
+                    HorizontalOptions="FillAndExpand"
+                    Placeholder="Email"
+                    Text="{Binding UserName}"
+                    VerticalOptions="FillAndExpand" />
+            <Entry
+                    Grid.Row="3"
+                    HorizontalOptions="FillAndExpand"
+                    IsPassword="True"
+                    Placeholder="Password"
+                    Text="{Binding UserPassword}"
+                    VerticalOptions="FillAndExpand" />
+            <HorizontalStackLayout
+                    Grid.Row="4"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Center">
+                <Label Margin="5" VerticalOptions="Center" FontFamily="frmnr.ttf"
+                    FontSize="18">
+                    Remember me
+                </Label>
+                <Switch
+                        Margin="160,0,0,5"
+                        HorizontalOptions="End"
+                        IsToggled="{Binding AutomaticLogin, Mode=TwoWay}" />
+            </HorizontalStackLayout>
+            <Button
+                    Grid.Row="5"
+                    BackgroundColor="{StaticResource Yellow100Accent}"
+                    Command="{Binding LoginBtn}"
+                    CornerRadius="20"
+                    FontFamily="frmnr.ttf"
+                    FontSize="18"
+                    Text="Login" />
+
+            <Button
+                    Grid.Row="6"
+                    BackgroundColor="{StaticResource Yellow100Accent}"
+                    Command="{Binding RegisterBtn}"
+                    CornerRadius="20"
+                    FontFamily="frmnr.ttf"
+                    FontSize="18"
+                    Text="Register using Email" />
+
+
+        </Grid>
+    </Grid>
+</ContentPage>

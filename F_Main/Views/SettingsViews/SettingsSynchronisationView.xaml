@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="F_Main.Views.SettingsViews.SettingsSynchronisationView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:title="clr-namespace:F_Main.CustomControllers"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:F_Framework.ViewModels.SettingsViewModels;assembly=F_Framework"
+    Title="SettingsSynchronisationView"
+    x:DataType="vm:SettingsViewModel"
+    Background="{StaticResource PageColor}">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding OnAppearingCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <Shell.TitleView>
+        <title:TitleViewControlller />
+    </Shell.TitleView>
+
+    <VerticalStackLayout
+        Margin="15"
+        HorizontalOptions="Center"
+        VerticalOptions="Start">
+        <RefreshView HorizontalOptions="Center" IsRefreshing="{Binding IsLoading, Mode=TwoWay}">
+            <FlexLayout
+                Margin="10"
+                Padding="1"
+                AlignItems="Center"
+                JustifyContent="SpaceEvenly">
+                <Label
+                    FontFamily="frmnr.ttf"
+                    FontSize="18"
+                    HorizontalOptions="Start"
+                    Text="Synchronize"
+                    VerticalOptions="Center"
+                    WidthRequest="280" />
+                <ImageButton
+                    Margin="60"
+                    Command="{Binding GetSynced}"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    Source="sync.svg"
+                    VerticalOptions="Center"
+                    WidthRequest="40" />
+            </FlexLayout>
+        </RefreshView>
+
+        <FlexLayout
+            Margin="10"
+            AlignItems="Center"
+            JustifyContent="SpaceBetween">
+
+            <Button
+                Command="{Binding AllowSyncCommand}"
+                FontFamily="frmnr.ttf"
+                FontSize="14"
+                HeightRequest="40"
+                Text="Allow Online Save"
+                VerticalOptions="Center"
+                WidthRequest="200" />
+            <Switch IsToggled="{Binding AllowSync, Mode=TwoWay}" />
+        </FlexLayout>
+    </VerticalStackLayout>
+</ContentPage>

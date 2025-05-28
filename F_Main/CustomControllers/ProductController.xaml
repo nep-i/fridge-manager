@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="F_Main.CustomControllers.ProductController">
+
+    <CollectionView  ItemsSource="{Binding AllProducts}" x:Name="FridgeCollection"
+                             SelectionMode="Multiple" SelectedItems="{Binding SelectedProducts, Mode=TwoWay}"
+                             SelectionChangedCommand="{Binding AddSelectedProducts}"
+                             SelectionChangedCommandParameter="{Binding Path=SelectedItems, Source={x:Reference FridgeCollection}}">
+        <CollectionView.ItemsLayout>
+            <GridItemsLayout Orientation="Vertical"
+                        Span="4" />
+        </CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Grid>
+
+                    <Border Grid.Column="1" Grid.Row="1"
+                            StrokeShape="RoundRectangle 5,5,5,5"
+                            Stroke="#C49B33"
+                            StrokeThickness="1"
+                            Padding="3"
+                            HorizontalOptions="Center"
+                            Margin="5">
+                        <VerticalStackLayout BackgroundColor="{StaticResource Yellow300Accent}">
+                            <Image Source="{Binding Icon}" HeightRequest="50"
+                                    WidthRequest="77">
+                            </Image>
+                            <Label Text="{Binding Name}" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+        <CollectionView.Header>
+            <FlexLayout JustifyContent="Center" Margin="5" AlignItems="Center"
+                                               MaximumHeightRequest="55" MaximumWidthRequest="400">
+
+                <ImageButton HeightRequest="50" WidthRequest="45" Source="edit.svg"
+                                     Margin="5" IsEnabled="False" Opacity=".3"
+                                     Command="{Binding ToDetailsView}">
+                    <ImageButton.Triggers>
+                        <DataTrigger TargetType="ImageButton" Binding="{Binding Source={x:Reference FridgeCollection},
+                                       Path=SelectedItems.Count}" Value="1">
+                            <Setter Property="IsEnabled" Value="True" />
+                            <Setter Property="Opacity" Value="1" />
+                        </DataTrigger>
+                    </ImageButton.Triggers>
+                </ImageButton>
+
+                <ImageButton Source="bin2.svg" HeightRequest="50" WidthRequest="55" Margin="5" Command="{Binding DeleteProductsCommand}" />
+                <ImageButton Source="newgrocery.svg" HeightRequest="50" WidthRequest="55" Margin="5" Command="{Binding AddProductToGroceryCommand}" />
+                <ImageButton Source="fridge_thik_stroke.svg" HeightRequest="50" WidthRequest="55" Margin="5" Command="{Binding AddProductToFridgeCommand}" />
+                <FlexLayout.Triggers>
+                    <DataTrigger TargetType="FlexLayout" Binding="{Binding Source={x:Reference FridgeCollection},
+                                       Path=SelectedItems.Count}" Value="0">
+                        <Setter Property="IsVisible" Value="False" />
+                        <Setter Property="HeightRequest" Value="0" />
+                    </DataTrigger>
+                </FlexLayout.Triggers>
+            </FlexLayout>
+        </CollectionView.Header>
+    </CollectionView>
+</ContentView>

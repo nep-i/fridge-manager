@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="F_Main.Views.GroceriesViews.GroceriesDetailsView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:F_Framework.Models;assembly=F_Framework"
+    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+    xmlns:title="clr-namespace:F_Main.CustomControllers"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:F_Framework.ViewModels.GroceriesViewModels;assembly=F_Framework"
+    x:Name="ThisPage"
+    x:DataType="vm:GroceryDetailsViewModel"
+    Background="{StaticResource PageColor}"
+    Shell.NavBarIsVisible="True">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding GetActiveGroceryCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <Shell.TitleView>
+        <title:TitleViewControlller />
+    </Shell.TitleView>
+
+    <ContentPage.Content>
+        <ScrollView IsEnabled="True">
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Start">
+                <VerticalStackLayout IsVisible="{Binding GrocFull.IsDone}" VerticalOptions="Start">
+                    <Label
+                        Margin="10"
+                        FontFamily="frmnr"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="There is no active grocery lists" />
+                    <skia:SKLottieView
+                        x:Name="flyIcon"
+                        HeightRequest="400"
+                        HorizontalOptions="Center"
+                        Progress="1"
+                        RepeatCount="-1"
+                        RepeatMode="Restart"
+                        Source="https://assets1.lottiefiles.com/private_files/lf30_vb7v5ca0.json"
+                        VerticalOptions="Start"
+                        WidthRequest="400" />
+                </VerticalStackLayout>
+
+                <Border
+                    x:Name="ActiveGrocery"
+                    Margin="5"
+                    Padding="5"
+                    BackgroundColor="{StaticResource Yellow300Accent}"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding GrocFull.IsDone, Mode=TwoWay, Converter={toolkit:InvertedBoolConverter}, ConverterParameter={Binding GrocFull.IsDone}}"
+                    Stroke="#C49B33"
+                    StrokeShape="RoundRectangle 5,5,5,5"
+                    StrokeThickness="1"
+                    VerticalOptions="StartAndExpand">
+
+                    <VerticalStackLayout>
+                        <HorizontalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                            <Label
+                                Margin="10"
+                                FontFamily="frmnr.ttf"
+                                FontSize="20"
+                                Text="Note : " />
+                            <Frame
+                                Padding="6"
+                                BackgroundColor="{StaticResource Yellow300Accent}"
+                                CornerRadius="5">
+                                <Entry
+                                    Background="{StaticResource SystemTealDark}"
+                                    HeightRequest="100"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding GrocFull.Note, Mode=TwoWay}"
+                                    VerticalTextAlignment="Start"
+                                    WidthRequest="280">
+                                    <Entry.Behaviors>
+                                        <toolkit:EventToCommandBehavior Command="{Binding SyncActiveNoteCommand}" EventName="TextChanged" />
+                                    </Entry.Behaviors>
+                                </Entry>
+                            </Frame>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                            <Button
+                                Margin="1"
+                                Padding="5"
+                                BackgroundColor="{StaticResource Yellow200Accent}"
+                                Command="{Binding AddShopCommand}"
+                                FontFamily="frmnr.ttf"
+                                FontSize="14"
+                                Text="Add Shop"
+                                VerticalOptions="Center" />
+                            <Entry
+                                Margin="10"
+                                MinimumWidthRequest="150"
+                                Text="{Binding ShopName, Mode=TwoWay}" />
+                        </HorizontalStackLayout>
+                        <CollectionView ItemsSource="{Binding GrocFull.Products, Mode=TwoWay}">
+                            <CollectionView.ItemTemplate>
+
+                                <DataTemplate x:DataType="model:Product">
+                                    <SwipeView>
+                                        <SwipeView.LeftItems>
+                                            <SwipeItems Mode="Execute">
+                                                <SwipeItem
+                                                    BackgroundColor="PaleVioletRed"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryDetailsViewModel}, AncestorLevel=1}, Path=MakeProductDoneCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    IconImageSource="delete.png"
+                                                    Text="Done" />
+                                            </SwipeItems>
+                                        </SwipeView.LeftItems>
+                                        <Grid>
+                                            <Frame
+                                                Margin="2"
+                                                Padding="5"
+                                                BackgroundColor="{StaticResource Yellow200Accent}"
+                                                HorizontalOptions="FillAndExpand">
+
+                                                <FlexLayout
+                                                    Margin="5"
+                                                    AlignContent="SpaceBetween"
+                                                    JustifyContent="SpaceBetween"
+                                                    MinimumHeightRequest="30"
+                                                    Opacity="{Binding IsDone, Converter={StaticResource ProductIsDoneToOpacity}}">
+                                                    <Label
+                                                        BackgroundColor="Transparent"
+                                                        FontFamily="frmnr.ttf"
+                                                        FontSize="20"
+                                                        Text="{Binding Name}" />
+                                                    <Label
+                                                        BackgroundColor="Transparent"
+                                                        FontFamily="frmnr.ttf"
+                                                        FontSize="20"
+                                                        Text="{Binding Type}" />
+                                                    <Label
+                                                        BackgroundColor="Transparent"
+                                                        FontFamily="frmnr.ttf"
+                                                        FontSize="20"
+                                                        Text="{Binding AmountToBuy}" />
+                                                </FlexLayout>
+                                                <Frame.GestureRecognizers>
+                                                    <DragGestureRecognizer
+                                                        CanDrag="True"
+                                                        DragStartingCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryDetailsViewModel}, AncestorLevel=1}, Path=DragProductAdded}"
+                                                        DragStartingCommandParameter="{Binding .}" />
+                                                </Frame.GestureRecognizers>
+                                            </Frame>
+                                        </Grid>
+                                    </SwipeView>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <CollectionView ItemsSource="{Binding GrocFull.Shops, Mode=TwoWay}">
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:ShopFull">
+                                    <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Border
+                                            Margin="5"
+                                            Padding="5"
+                                            BackgroundColor="{StaticResource Yellow300Accent}"
+                                            HorizontalOptions="FillAndExpand"
+                                            MinimumHeightRequest="50"
+                                            MinimumWidthRequest="100"
+                                            Stroke="#C49B33"
+                                            StrokeShape="RoundRectangle 5,5,5,5"
+                                            StrokeThickness="1"
+                                            VerticalOptions="StartAndExpand">
+
+                                            <VerticalStackLayout VerticalOptions="Center">
+                                                <Label
+                                                    BackgroundColor="Transparent"
+                                                    FontAttributes="Bold"
+                                                    FontFamily="frmnr.ttf"
+                                                    FontSize="20"
+                                                    HorizontalOptions="Center"
+                                                    Text="{Binding Name}"
+                                                    TextColor="{StaticResource Yellow100Accent}"
+                                                    TextTransform="Uppercase" />
+
+                                                <CollectionView
+                                                    x:Name="ShopProductCollection"
+                                                    x:DataType="model:ShopFull"
+                                                    ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type model:ShopFull}, AncestorLevel=1}, Path=Products}"
+                                                    SelectedItems="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryDetailsViewModel}, AncestorLevel=1}, Path=SelectedProducts}"
+                                                    SelectionChangedCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryDetailsViewModel}, AncestorLevel=1}, Path=AddSelectedProducts}"
+                                                    SelectionChangedCommandParameter="{Binding Path=SelectedItems, Source={x:Reference ShopProductCollection}, Mode=OneWay}"
+                                                    SelectionMode="Multiple">
+
+                                                    <CollectionView.ItemTemplate>
+                                                        <DataTemplate x:DataType="model:Product">
+                                                            <SwipeView>
+                                                                <SwipeView.LeftItems>
+                                                                    <SwipeItems Mode="Execute">
+                                                                        <SwipeItem
+                                                                            BackgroundColor="PaleVioletRed"
+                                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryDetailsViewModel}, AncestorLevel=1}, Path=MakeProductDoneCommand}"
+                                                                            CommandParameter="{Binding .}"
+                                                                            IconImageSource="delete.png"
+                                                                            Text="Done" />
+                                                                    </SwipeItems>
+                                                                </SwipeView.LeftItems>
+
+                                                                <Border
+                                                                    Margin="2"
+                                                                    Padding="2"
+                                                                    HorizontalOptions="FillAndExpand"
+                                                                    MinimumWidthRequest="340"
+                                                                    VerticalOptions="CenterAndExpand">
+
+                                                                    <FlexLayout
+                                                                        Margin="5"
+                                                                        Padding="1"
+                                                                        AlignContent="SpaceBetween"
+                                                                        JustifyContent="SpaceBetween"
+                                                                        MinimumHeightRequest="30"
+                                                                        MinimumWidthRequest="270"
+                                                                        Opacity="{Binding IsDone, Converter={StaticResource ProductIsDoneToOpacity}}">
+                                                                        <Label
+                                                                            BackgroundColor="Transparent"
+                                                                            FontFamily="frmnr.ttf"
+                                                                            FontSize="20"
+                                                                            Text="{Binding Name}" />
+                                                                        <Label
+                                                                            BackgroundColor="Transparent"
+                                                                            FontFamily="frmnr.ttf"
+                                                                            FontSize="20"
+                                                                            Text="{Binding Type}" />
+                                                                        <Label
+                                                                            FontFamily="frmnr.ttf"
+                                                                            FontSize="17"
+                                                                            Text="{Binding AmountToBuy}" />
+                                                                    </FlexLayout>
+                                                                </Border>
+                                                            </SwipeView>
+                                                        </DataTemplate>
+                                                    </CollectionView.ItemTemplate>
+                                                </CollectionView>
+                                            </VerticalStackLayout>
+                                        </Border>
+                                        <Grid.GestureRecognizers>
+                                            <DropGestureRecognizer
+                                                AllowDrop="True"
+                                                DropCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryDetailsViewModel}, AncestorLevel=1}, Path=DragProductDroped}"
+                                                DropCommandParameter="{Binding Name}" />
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        <Button
+                            Margin="10"
+                            BackgroundColor="{StaticResource Yellow100Accent}"
+                            Command="{Binding GroceryIsDoneCommand}"
+                            FontFamily="frmnr.ttf"
+                            FontSize="14"
+                            HorizontalOptions="Center"
+                            Text="This list is Done!"
+                            VerticalOptions="Center"
+                            WidthRequest="250" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

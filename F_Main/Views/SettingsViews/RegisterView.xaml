@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="F_Main.Views.SettingsViews.RegisterView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:title="clr-namespace:F_Main.CustomControllers"
+    xmlns:vm="clr-namespace:F_Framework.ViewModels.SettingsViewModels;assembly=F_Framework"
+    x:DataType="vm:RegisterViewModel"
+    Background="{StaticResource PageColor}">
+
+    <Shell.TitleView>
+        <title:TitleViewControlller />
+    </Shell.TitleView>
+
+    <VerticalStackLayout
+        Padding="20"
+        HeightRequest="250"
+        VerticalOptions="Start"
+        >
+
+        <Entry
+            HorizontalOptions="FillAndExpand"
+            Keyboard="Text"
+            Placeholder="Your Name"
+            Text="{Binding Name}"
+            VerticalOptions="FillAndExpand" />
+        <Entry
+            Margin="5"
+            HorizontalOptions="FillAndExpand"
+            Placeholder="Email"
+            Text="{Binding Email}"
+            VerticalOptions="FillAndExpand" />
+        <Entry
+            HorizontalOptions="FillAndExpand"
+            IsPassword="True"
+            Placeholder="Password"
+            Text="{Binding Password}"
+            VerticalOptions="FillAndExpand" />
+        <Button
+            BackgroundColor="{StaticResource Yellow100Accent}"
+            Command="{Binding RegisterUser}"
+            CornerRadius="20"
+            FontFamily="frmnr.ttf"
+            FontSize="18"
+            Text="Register" />
+    </VerticalStackLayout>
+</ContentPage>

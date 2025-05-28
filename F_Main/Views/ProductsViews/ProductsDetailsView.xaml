@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="F_Main.Views.ProductsViews.ProductsDetailsView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:F_Framework.ViewModels.ProductsViewModels;assembly=F_Framework"
+    xmlns:title="clr-namespace:F_Main.CustomControllers"
+    x:DataType="model:ProductDetailsViewModel"
+    Background="{StaticResource PageColor}">
+
+    <Shell.TitleView>
+        <title:TitleViewControlller />
+    </Shell.TitleView>
+
+    <Border
+        Margin="5"
+        HeightRequest="450"
+        HorizontalOptions="FillAndExpand"
+        Stroke="#C49B33"
+        StrokeShape="RoundRectangle 5,5,5,5"
+        StrokeThickness="2"
+        VerticalOptions="StartAndExpand">
+        <VerticalStackLayout BackgroundColor="{StaticResource Yellow200Accent}">
+
+            <FlexLayout
+                Margin="10"
+                AlignItems="Start"
+                JustifyContent="SpaceBetween">
+                <Label
+                    FontFamily="frmnr.ttf"
+                    FontSize="26"
+                    Text="Name : " />
+                <Entry
+                    FontFamily="frmnr.ttf"
+                    FontSize="26"
+                    HorizontalOptions="Center"
+                    Text="{Binding Product.Name}"
+                    VerticalOptions="Center" />
+                <ImageButton
+                    HeightRequest="50"
+                    Source="{Binding Product.Icon}"
+                    WidthRequest="60" />
+            </FlexLayout>
+
+            <FlexLayout
+                Margin="10"
+                AlignItems="Start"
+                JustifyContent="SpaceBetween">
+                <Label
+                    FontFamily="frmnr.ttf"
+                    FontSize="26"
+                    Text="Life cycle : " />
+                <Entry
+                    FontFamily="frmnr.ttf"
+                    FontSize="26"
+                    HorizontalOptions="Center"
+                    Text="{Binding Product.DaysForLife}"
+                    VerticalOptions="Center" />
+                <Label
+                    FontFamily="frmnr.ttf"
+                    FontSize="26"
+                    Text="Days" />
+            </FlexLayout>
+
+            <FlexLayout
+                Margin="10"
+                AlignItems="Start"
+                JustifyContent="SpaceBetween">
+                <Label
+                    FontFamily="frmnr.ttf"
+                    FontSize="26"
+                    Text="Type : " />
+                <Entry
+                    FontFamily="frmnr.ttf"
+                    FontSize="26"
+                    HorizontalOptions="Center"
+                    Text="{Binding Product.Type}"
+                    VerticalOptions="Center" />
+            </FlexLayout>
+
+            <FlexLayout
+                Margin="10"
+                AlignItems="Start"
+                JustifyContent="SpaceBetween">
+                <Label
+                    FontFamily="frmnr.ttf"
+                    FontSize="26"
+                    Text="Amount to buy : " />
+                <Entry
+                    FontFamily="frmnr.ttf"
+                    FontSize="23"
+                    HorizontalOptions="Center"
+                    Text="{Binding Product.AmountToBuy}"
+                    VerticalOptions="Center" />
+            </FlexLayout>
+
+            <Button
+                Margin="10"
+                BackgroundColor="{StaticResource Yellow100Accent}"
+                Command="{Binding Update}"
+                FontFamily="frmnr.ttf"
+                FontSize="26"
+                Text="Update" />
+        </VerticalStackLayout>
+    </Border>
+</ContentPage>

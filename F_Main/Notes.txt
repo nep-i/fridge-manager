@@ -1,0 +1,457 @@
+﻿ FridgeView.xaml
+
+
+ <!--<Label
+                        FontFamily="frmnr"
+                        FontSize="20"
+                        HorizontalTextAlignment="Start"
+                        Text="Add Some New Products!" />
+                        <skia:SKLottieView
+                        HeightRequest="250"
+                        HorizontalOptions="Center"
+                        Progress="1"
+                        RepeatCount="-1"
+                        RepeatMode="Restart"
+                        Source="https://assets8.lottiefiles.com/packages/lf20_zUShxQMjqI.json"
+                        VerticalOptions="Start"
+                        WidthRequest="250" />-->
+ 
+ <!--<Frame Padding="10"  
+                               BackgroundColor="Wheat" 
+                               Margin="5" 
+                               WidthRequest="100" 
+                               HeightRequest="100" 
+                               CornerRadius="10" >
+                            <VerticalStackLayout>
+                                <Image 
+                       Source="{Binding Icon}"
+                       Aspect="AspectFill"
+                       HeightRequest="60"
+                       WidthRequest="60" VerticalOptions="Center"/>
+                                <Label 
+                       Text="{Binding Name}"
+                       FontAttributes="Bold" VerticalOptions="Center"/>
+                                <Label 
+                       Text="{Binding Type}"
+                       FontAttributes="Bold" VerticalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Focused">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="White" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <!--<VisualState x:Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="White"/>
+                                        </VisualState.Setters>
+                                    </VisualState>-->
+                        <!--</VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            --><!--<Frame.Triggers>
+                                <Trigger TargetType="Frame" Property="Selected"
+                            </Frame.Triggers>-->
+                            <!--<Frame.Triggers>
+                                <Trigger TargetType="Frame" Property="IsFocused" Value="True">
+                                    <Setter Property="BackgroundColor" Value="Green"/>
+                                </Trigger>
+                            </Frame.Triggers>-->
+                            <!--<Frame.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="{x:Reference Selected}"/>
+                            </Frame.GestureRecognizers>--><!--
+                        </Frame>-->
+
+
+
+                         <VerticalStackLayout BackgroundColor="Wheat" x:Name="VertStack">
+                                <VerticalStackLayout.Triggers>
+                                    <Trigger TargetType="VerticalStackLayout" BindingContext="{Binding Source={x:Reference Id}, Path=IsPressed }" Value="True" >
+                                        <Setter Property="BackgroundColor" Value="#5DADE2"/>
+                                    </Trigger>
+                                </VerticalStackLayout.Triggers>
+
+
+                                   <ImageButton HeightRequest="30" Source="bin2.svg"  Margin="3"  Grid.Column="2"/>
+                        <ImageButton HeightRequest="30" Source="fridge_thik_stroke.svg" Margin="3" Grid.Column="3" />
+                        <Label Text="=>" VerticalOptions="Center" FontSize="30" Margin="3" BackgroundColor="Red" Grid.Column="4"/>
+                        <!--<Label Text="=>" VerticalOptions="Center" FontSize="40" />-->
+                        <Button  WidthRequest="50" Text="Both" Margin="3" BackgroundColor="Wheat" TextColor="Black" Grid.Column="6"/>
+                        <Label FontSize="40" Text="&lt;=" VerticalOptions="Center" BackgroundColor="Red" Grid.Column="7"/>
+                        <ImageButton HeightRequest="30" Source="bin.svg" Margin="3" Grid.Column="8"/>
+
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:FridgeViewModel}}, Path=AddSelectedProducts}" CommandParameter="{Binding .}"
+
+
+
+                         SelectedItem="{Binding AddedGrocery, Mode=TwoWay}"
+                             SelectionChangedCommand="{Binding AddSelectedGroceriesFullCommand}"
+                             SelectionChangedCommandParameter="{Binding Path=SelectedItem, Source={x:Reference GroceryCollection}}"
+
+
+
+
+                               <!--<RefreshView IsRefreshing="{Binding IsRefreshing, Mode=OneWayToSource}" Command="{Binding AddSelectedGroceriesFullCommand}">-->
+            <CollectionView  ItemsSource="{Binding AllFullGroceries}" x:Name="GroceryCollection"
+                             SelectionMode="Multiple" SelectedItems="{Binding SelectedGroceries, Mode=TwoWay}"
+                             SelectionChangedCommand="{Binding AddSelectedGroceriesFullCommand}"
+                             SelectionChangedCommandParameter="{Binding Path=SelectedItems, Source={x:Reference GroceryCollection}}">
+
+                <!--<CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="1" />
+                    </CollectionView.ItemsLayout>-->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:GroceryFull">
+                    <Label Text="Grocery"/>
+                    <!--<Grid>
+                            <Border Grid.Column="1" Grid.Row="1"
+                                    StrokeShape="RoundRectangle 5,5,5,5"
+                                    Stroke="#C49B33"
+                                    StrokeThickness="1"
+                                    Padding="3"
+                                    HorizontalOptions="Center"
+                                    Margin="5">
+
+                                <VerticalStackLayout>
+                                    <Label Text="Shops"/>
+                                    <CollectionView  ItemsSource="{Binding Shops}" >
+                                        <CollectionView.GroupHeaderTemplate>
+                                            <DataTemplate x:DataType="model:ShopFull">
+                                                <Label Text="{Binding Name}"
+                                                       BackgroundColor="LightGray"
+                                                       FontSize="18"
+                                                       FontAttributes="Bold" />
+                                            </DataTemplate>
+                                        </CollectionView.GroupHeaderTemplate>
+                                        <CollectionView.ItemsLayout>
+                                            <GridItemsLayout Orientation="Vertical" Span="2" />
+                                        </CollectionView.ItemsLayout>
+                                        
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate x:DataType="model:ShopFull">
+                                                <Grid>
+                                                    <Border Grid.Column="1" Grid.Row="1"
+                                                            StrokeShape="RoundRectangle 5,5,5,5"
+                                                            Stroke="#B6DB05"
+                                                            StrokeThickness="1"
+                                                            Padding="3"
+                                                            HorizontalOptions="Center"
+                                                            Margin="5"
+                                                            HeightRequest="20">
+
+                                                        <VerticalStackLayout>
+
+                                                            <Label Text="{Binding Name}"
+                                                       BackgroundColor="LightGray"
+                                                       FontSize="18"
+                                                       FontAttributes="Bold" />
+                                                            <CollectionView  ItemsSource="{Binding Products}">
+
+                                                                <CollectionView.ItemsLayout>
+                                                                    <GridItemsLayout Orientation="Vertical"
+                                                                                Span="2" />
+                                                                </CollectionView.ItemsLayout>
+                                                                <CollectionView.ItemTemplate>
+                                                                    <DataTemplate x:DataType="model:Product">
+                                                                        <Grid>
+                                                                            <Border Grid.Column="1" Grid.Row="1"
+                                                                                    StrokeShape="RoundRectangle 5,5,5,5"
+                                                                                    Stroke="#B6DB05"
+                                                                                    StrokeThickness="1"
+                                                                                    Padding="3"
+                                                                                    HorizontalOptions="Center"
+                                                                                    Margin="5"
+                                                                                    HeightRequest="20">
+
+                                                                                <Label Text="{Binding Name}" HorizontalOptions="Center" />
+                                                                            </Border>
+                                                                        </Grid>
+                                                                    </DataTemplate>
+                                                                </CollectionView.ItemTemplate>
+                                                            </CollectionView>
+                                                        </VerticalStackLayout>
+                                                    </Border>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                    
+                                    <Label Text="{Binding Note}" HorizontalOptions="Center" />
+
+                                    --><!--<CollectionView  ItemsSource="{Binding Products}">
+                                        <CollectionView.ItemsLayout>
+                                            <GridItemsLayout Orientation="Vertical"
+                                                             Span="2" />
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate x:DataType="model:Product">
+                                                <Grid>
+                                                    <Border Grid.Column="1" Grid.Row="1"
+                                                            StrokeShape="RoundRectangle 5,5,5,5"
+                                                            Stroke="#B6DB05"
+                                                            StrokeThickness="1"
+                                                            Padding="3"
+                                                            HorizontalOptions="Center"
+                                                            Margin="5"
+                                                            HeightRequest="20">
+
+                                                        <Label Text="{Binding Name}" HorizontalOptions="Center" />
+                                                    </Border>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>--><!--
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>-->
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.Header>
+                    <FlexLayout JustifyContent="Center" Margin="5" AlignItems="Center"
+                                               MaximumHeightRequest="55" MaximumWidthRequest="400">
+
+                        <ImageButton HeightRequest="50" WidthRequest="45" Source="edit.svg"
+                                     Margin="5" IsEnabled="False" Opacity=".3"
+                                     Command="{Binding EditGroceryCommand}">
+                            <ImageButton.Triggers>
+                                <DataTrigger TargetType="ImageButton" Binding="{Binding Source={x:Reference GroceryCollection},
+                                       Path=SelectedItems.Count}" Value="1">
+                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Setter Property="Opacity" Value="1" />
+                                </DataTrigger>
+                            </ImageButton.Triggers>
+                        </ImageButton>
+
+                        <ImageButton Source="bin2.svg" HeightRequest="50" WidthRequest="55" Margin="5" Command="{Binding DeleteGroceryCommand}" />
+                        <ImageButton Source="reuse.svg" HeightRequest="50" WidthRequest="55" Margin="5" Command="{Binding ReUseCommand}" />
+                        <ImageButton Source="done.svg" HeightRequest="50" WidthRequest="55" Margin="5" Command="{Binding IsDoneCommand}" />
+                        <FlexLayout.Triggers>
+                            <DataTrigger TargetType="FlexLayout" Binding="{Binding Source={x:Reference GroceryCollection},
+                                       Path=SelectedItems.Count}" Value="0">
+                                <Setter Property="IsVisible" Value="False" />
+                                <Setter Property="HeightRequest" Value="0" />
+                            </DataTrigger>
+                        </FlexLayout.Triggers>
+                    </FlexLayout>
+                </CollectionView.Header>
+            </CollectionView>
+        <!--</RefreshView>-->
+
+                // Instruction for deleting database file in Android Adb root
+        //        adb root
+        //          adb pull /data/user/0/<applicationame>/files/.local/share/appsettiings.txt[LOCAL_FOLDER]
+        //          then you can use adb shell then rm -f to remove it, like this:
+        //          adb shell
+        //          su
+        //          rm -f /data/user/0/<applicationame>/files/.local/share/appsettiings.txt
+
+                public static string abspath = "/data/user/0/com.companyname.f_main/files/TestData2.db3";
+
+                
+            //Microsoft.Maui.Handlers.LabelHandler.Mapper.AppendToMapping("dima", (handler, view) =>
+            //{
+            //    IFontManager fontManager = handler.MauiContext.Services.GetRequiredService<IFontManager>();
+            //    ITextStyle style = handler.MauiContext.Services.GetRequiredService<ITextStyle>();
+            //    handler.PlatformView.UpdateFont(style, fontManager);
+            //});
+
+
+
+
+
+
+            public class GroceryFullGetter
+{
+    private readonly IUnitOfWork _service;
+
+    public GroceryFullGetter(IUnitOfWork service)
+    {
+        _service = service;
+    }
+
+    public async Task<GroceryFull> GetGroceryFull(int groceryId)
+    {
+        var grocery = await _service.Groceries.Value.GetByIdAsync(groceryId);
+        if (grocery == null) return null;
+
+        var products = await _service.Products.Value.GetAll();
+        var connections = await _service.GroceryShopProducts.Value.GetAllByFilterAsync(x => x.GroceryId == groceryId);
+        var shops = await _service.Shops.Value.GetAll();
+
+        var groceryFull = new GroceryFull(grocery);
+        foreach (var conn in connections.elements)
+        {
+            var product = products.elements.FirstOrDefault(x => x.Id == conn.ProductId);
+            if (conn.ShopId == 0)
+            {
+                groceryFull.Products.Add(product);
+            }
+            else
+            {
+                var shop = shops.elements.FirstOrDefault(x => x.Id == conn.ShopId);
+                if (!groceryFull.Shops.Any(x => x.Id == conn.ShopId))
+                {
+                    var shopFull = new ShopFull(shop);
+                    shopFull.Products.Add(product);
+                    groceryFull.Shops.Add(shopFull);
+                }
+                else
+                {
+                    var existingShop = groceryFull.Shops.FirstOrDefault(x => x.Id == conn.ShopId);
+                    existingShop.Products.Add(product);
+                }
+            }
+        }
+
+        return groceryFull;
+    }
+
+    public async Task<IEnumerable<GroceryFull>> GetAllGroceriesFull()
+    {
+        var groceries = await _service.Groceries.Value.GetAll();
+        var groceriesFull = new List<GroceryFull>();
+        foreach (var grocery in groceries.elements)
+        {
+            var groceryFull = await GetGroceryFull(grocery.Id);
+            groceriesFull.Add(groceryFull);
+        }
+        return groceriesFull;
+    }
+}
+
+
+
+private async Task GetAllSync()
+        {
+            IsLoading = true;
+            var previousBool = Settings.SyncAllow;
+            Settings.SyncAllow = true;
+
+            var productsResult = await _unitOfWork.Products.Value.GetAll();
+            var groceriesResult = await _unitOfWork.Groceries.Value.GetAll();
+            var gspproductsResult = await _unitOfWork.GroceryShopProducts.Value.GetAll();
+            //var items = gspproducts.elements;
+            var shopsResult = await _unitOfWork.Shops.Value.GetAll();
+
+            var products = productsResult.elements.ToArray();
+            var groceries = groceriesResult.elements.ToArray();
+            var gsp = gspproductsResult.elements.ToArray();
+            var shops = shopsResult.elements.ToArray();
+
+            if (gsp.Count() > 0)
+            {
+                for (int i = 0; i < gsp.Length; i++)
+                {
+                    Result<Shop> shopNew = null;
+                    var item = gsp[i];
+                    var newGsp = new GroceryShopProduct();
+                    var groceryNew = new Result<Grocery>();
+                    var productNew = new Result<Product>();
+                    newGsp.Id = item.Id;
+                    var grocery = groceries.Where(x => x.Id == item.GroceryId).FirstOrDefault();
+                    var id = grocery?.Id;
+                    if (grocery != null)
+                        groceryNew = await _unitOfWork.Groceries.Value.AddOrUpdate(grocery);
+
+                    if (grocery.Id != id)
+                    {
+                        for (int j = 0; j < gsp.Length; j++)
+                        {
+                            var element = gsp[j];
+                            if (element.GroceryId == id)
+                            {
+                                element.GroceryId = groceryNew.element.Id;
+                            }
+                        }
+                    }
+
+                    var product = products.Where(x => x.Id == item.ProductId).FirstOrDefault();
+                    var idPr = product?.Id;
+                    if (product != null)
+                        productNew = await _unitOfWork.Products.Value.AddOrUpdate(product);
+                    if (product?.Id != id)
+                    {
+                        for (int j = 0; j < gsp.Length; j++)
+                        {
+                            var element = gsp[j];
+                            if (element.ProductId == idPr)
+                            {
+                                element.ProductId = groceryNew.element.Id;
+                            }
+                        }
+                    }
+
+                    if (item?.ShopId != 0)
+                    {
+                        var shop = shops.Where(x => x.Id == item.ShopId).FirstOrDefault();
+                        var idShop = shop?.Id;
+                        shopNew = await _unitOfWork.Shops.Value.AddOrUpdate(shop);
+                        if (shop.Id != idShop)
+                        {
+                            for (int j = 0; j < gsp.Length; j++)
+                            {
+                                var element = gsp[j];
+                                if (element.ShopId == idShop)
+                                {
+                                    element.ShopId = shopNew.element.Id;
+                                }
+                            }
+                        }
+                    }
+                    //if (groceryNew.element != null && groceryNew.element.Id != 0)
+                    //    newGsp.GroceryId = groceryNew.element.Id;
+                    if (shopNew != null && shopNew.element.Id != 0)
+                        item.ShopId = shopNew.element.Id;
+                    if (productNew != null && productNew.element.Id != 0)
+                        item.ProductId = productNew.element.Id;
+                    _ = await _unitOfWork.GroceryShopProducts.Value.AddOrUpdate(item);
+                }
+            }
+
+
+            if (products.Count() > 0)
+            {
+                foreach (var item in products)
+                {
+                    await _unitOfWork.Products.Value.AddOrUpdate(item);
+                }
+            }
+            //if (groceries.elements.Count() > 0)
+            //{
+            //    foreach (var item in groceries.elements)
+            //    {
+            //        await _unitOfWork.Groceries.Value.AddOrUpdate(item);
+            //    }
+            //}
+            //try
+            //{
+
+            //    if (items != null && items.Count() > 0)
+            //    {
+            //        foreach (var item in items)
+            //        {
+            //            _ = await _unitOfWork.GroceryShopProducts.Value.AddOrUpdate(item);
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    throw new Exception(ex.Message + "gspproducts");
+            //}
+
+
+            if (shops.Count() > 0)
+            {
+                foreach (var item in shops)
+                {
+                    await _unitOfWork.Shops.Value.AddOrUpdate(item);
+                }
+            }
+
+            Settings.SyncAllow = previousBool;
+            IsLoading = false;
+            await Task.Delay(2200);
+            _messageService.MakeToast("Syncronized!");
+        }

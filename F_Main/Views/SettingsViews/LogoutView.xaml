@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="F_Main.Views.SettingsViews.LogoutView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:title="clr-namespace:F_Main.CustomControllers"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:F_Framework.ViewModels.SettingsViewModels;assembly=F_Framework"
+    Title="Logout"
+    x:DataType="vm:SettingsViewModel"
+    Background="{StaticResource PageColor}">
+
+    <Shell.TitleView>
+        <title:TitleViewControlller />
+    </Shell.TitleView>
+
+    <VerticalStackLayout
+        Margin="15"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <VerticalStackLayout Margin="10" HorizontalOptions="Center">
+            <Label
+                FontFamily="frmnr.ttf"
+                FontSize="18"
+                HorizontalOptions="Center"
+                Text="{Binding Name}"
+                VerticalOptions="Center" />
+            <Label
+                FontFamily="frmnr.ttf"
+                FontSize="18"
+                HorizontalOptions="Center"
+                Text="{Binding Email}"
+                VerticalOptions="Center" />
+
+        </VerticalStackLayout>
+
+        <Button
+            BackgroundColor="{StaticResource Yellow100Accent}"
+            Command="{Binding LogOutCommand}"
+            FontFamily="frmnr.ttf"
+            FontSize="14"
+            HeightRequest="40"
+            HorizontalOptions="Center"
+            Text="Logout"
+            VerticalOptions="Center" />
+    </VerticalStackLayout>
+
+</ContentPage>

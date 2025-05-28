@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="F_Main.Views.GroceriesViews.GroceriesNewView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behave="clr-namespace:F_Framework.Behaviors;assembly=F_Framework"
+    xmlns:model="clr-namespace:F_Framework.Models;assembly=F_Framework"
+    xmlns:title="clr-namespace:F_Main.CustomControllers"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:F_Framework.ViewModels.GroceriesViewModels;assembly=F_Framework"
+    x:Name="ThisPage"
+    x:DataType="vm:GroceryNewViewModel"
+    Background="{StaticResource PageColor}"
+    Shell.NavBarIsVisible="True">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding OnAppearanceCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <Shell.TitleView>
+        <title:TitleViewControlller />
+    </Shell.TitleView>
+
+    <ContentPage.Content>
+
+        <Border
+            Margin="5"
+            Padding="5"
+            BackgroundColor="{StaticResource Yellow200Accent}"
+            HorizontalOptions="FillAndExpand"
+            MinimumHeightRequest="50"
+            MinimumWidthRequest="100"
+            Stroke="#C49B33"
+            StrokeShape="RoundRectangle 5,5,5,5"
+            StrokeThickness="1"
+            VerticalOptions="StartAndExpand">
+            <VerticalStackLayout>
+
+                <FlexLayout
+                    Margin="5"
+                    AlignItems="Start"
+                    JustifyContent="SpaceBetween"
+                    MinimumHeightRequest="35"
+                    MinimumWidthRequest="100">
+                    <Button
+                        Margin="1"
+                        BackgroundColor="{StaticResource Yellow100Accent}"
+                        Command="{Binding AddProductCommand}"
+                        FontFamily="frmnr.ttf"
+                        FontSize="14"
+                        HorizontalOptions="Start"
+                        Text="Add Product" />
+
+                    <Frame
+                        Padding="5"
+                        BackgroundColor="{StaticResource Blue200Accent}"
+                        CornerRadius="3"
+                        WidthRequest="150">
+                        <Entry
+                            x:Name="InputText"
+                            BackgroundColor="{StaticResource Blue200Accent}"
+                            Text="{Binding NewProductName, Mode=TwoWay}">
+                            <Entry.Behaviors>
+                                <behave:PlaceholderProductsBehavior />
+                            </Entry.Behaviors>
+                        </Entry>
+                    </Frame>
+                </FlexLayout>
+
+                <Label
+                    FontAttributes="Italic"
+                    FontSize="17"
+                    HorizontalOptions="EndAndExpand"
+                    Text="{Binding Source={x:Reference InputText}, Path=Placeholder}"
+                    TextColor="LightGray" />
+                <CollectionView x:Name="ProductsCollection" ItemsSource="{Binding AddedProducts, Mode=TwoWay}">
+
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Product">
+                            <Frame
+                                Margin="5"
+                                Padding="5"
+                                BackgroundColor="{StaticResource Yellow200Accent}"
+                                HorizontalOptions="FillAndExpand">
+
+                                <Label
+                                    Margin="1"
+                                    FontAttributes="Bold"
+                                    FontFamily="frmnr.ttf"
+                                    FontSize="14"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding Name}" />
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Button
+                    Margin="1"
+                    BackgroundColor="{StaticResource Yellow100Accent}"
+                    Command="{Binding Create}"
+                    FontFamily="frmnr.ttf"
+                    FontSize="14"
+                    Text="Create Grocery" />
+            </VerticalStackLayout>
+        </Border>
+    </ContentPage.Content>
+</ContentPage>

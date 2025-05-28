@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Style x:Key="myShell" TargetType="Shell">
+        <Setter Property="Shell.BackgroundColor" Value="{StaticResource Cyan200Accent}" />
+        <Setter Property="Shell.ForegroundColor" Value="{StaticResource SystemBlueDark}" />
+        <Setter Property="Shell.TitleColor" Value="{StaticResource SystemGray6Dark}" />
+        <Setter Property="Shell.DisabledColor" Value="Red" />
+        <Setter Property="Shell.UnselectedColor" Value="{StaticResource Gray500}" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Cyan200Accent}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Black}" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource Gray500}" />
+        <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource SystemGray6Dark}" />
+        <Setter Property="Shell.FlyoutBackground" Value="{StaticResource FlyoutColor}" />
+        <Setter Property="Shell.FlyoutWidth" Value="180" />
+        <Setter Property="Shell.NavBarHasShadow" Value="True" />
+    </Style>
+</ResourceDictionary>

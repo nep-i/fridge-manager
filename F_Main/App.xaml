@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application
+    x:Class="F_Main.App"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behave="clr-namespace:F_Framework.Behaviors;assembly=F_Framework"
+    xmlns:converter="clr-namespace:F_Framework.Converters;assembly=F_Framework"
+    xmlns:local="clr-namespace:F_Main">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <!--<ResourceDictionary Source="Resources/Styles/Styles.xaml" />-->
+                <ResourceDictionary Source="Resources/Styles/FridgeStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converter:DateToOpacityConverter x:Key="DateToOpacity" />
+            <converter:ProductIsDoneToOpacityConverter x:Key="ProductIsDoneToOpacity" />
+            <behave:PlaceholderProductsBehavior x:Key="NamesPlaceholder" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

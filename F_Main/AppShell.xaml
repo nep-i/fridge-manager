@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="F_Main.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fridge="clr-namespace:F_Main.Views.FridgeViews"
+    xmlns:groceries="clr-namespace:F_Main.Views.GroceriesViews"
+    xmlns:local="clr-namespace:F_Main"
+    xmlns:products="clr-namespace:F_Main.Views.ProductsViews"
+    xmlns:settings="clr-namespace:F_Main.Views.SettingsViews"
+    xmlns:shops="clr-namespace:F_Main.Views.ShopViews"
+    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+    xmlns:title="clr-namespace:F_Main.CustomControllers"
+    Shell.FlyoutBehavior="Flyout"
+    Style="{StaticResource myShell}">
+
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <VerticalStackLayout
+                HorizontalOptions="Center"
+                Opacity=".7"
+                VerticalOptions="Center">
+                <Image
+                    Margin="10"
+                    HeightRequest="30"
+                    Source="{Binding FlyoutIcon}"
+                    WidthRequest="50" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="-------"
+                    TextColor="{StaticResource Blue200Accent}" />
+            </VerticalStackLayout>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+    <Shell.FlyoutHeader>
+        <VerticalStackLayout>
+
+            <Label
+                Margin="11"
+                FontFamily="frmnr"
+                FontSize="18"
+                HorizontalOptions="Center"
+                Text="Fridge Manager" />
+        </VerticalStackLayout>
+    </Shell.FlyoutHeader>
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout>
+            <skia:SKLottieView
+                x:Name="flyIcon"
+                Margin="30"
+                HeightRequest="250"
+                HorizontalOptions="Center"
+                Progress="1"
+                RepeatCount="-1"
+                RepeatMode="Reverse"
+                Source="big.json"
+                VerticalOptions="Center"
+                WidthRequest="50" />
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
+
+    <FlyoutItem Title="my fridge" Icon="fridge.png" >
+        <ShellContent x:Name="FridgeView"
+            Title="MY FRIDGE"
+            ContentTemplate="{DataTemplate fridge:FridgeView}"
+            Icon="fridge.png"
+            Route="FridgeView" />
+    </FlyoutItem>
+    <FlyoutItem Title="products" Icon="products.svg">
+        <ShellContent
+            Title="STORAGE"
+            ContentTemplate="{DataTemplate products:ProductsAllView}"
+            Icon="products.svg"
+            Route="ProductsAllView" />
+        <ShellContent
+            Title="ADD"
+            ContentTemplate="{DataTemplate products:ProductsNewView}"
+            Icon="newproduct.svg"
+            Route="ProductsNewView" />
+    </FlyoutItem>
+    <FlyoutItem Title="shops" Icon="shop.svg">
+        <ShellContent
+            Title="MY SHOPS"
+            ContentTemplate="{DataTemplate shops:ShopsAllView}"
+            Icon="twoshops.svg"
+            Route="ShopsAllView" />
+        <ShellContent
+            Title="ADD"
+            ContentTemplate="{DataTemplate shops:ShopsNewView}"
+            Icon="shop.svg"
+            Route="ShopsNewView" />
+    </FlyoutItem>
+    <FlyoutItem Title="groceries" Icon="shopcart.svg">
+        <ShellContent
+            Title="ACTIVE"
+            ContentTemplate="{DataTemplate groceries:GroceriesDetailsView}"
+            Icon="active.svg"
+            Route="GroceriesDetailsView" />
+        <ShellContent
+            Title="GROCERIES"
+            ContentTemplate="{DataTemplate groceries:GroceriesAllView}"
+            Icon="groceries.svg"
+            Route="GroceriesAllView" />
+        <ShellContent
+            Title="ADD"
+            ContentTemplate="{DataTemplate groceries:GroceriesNewView}"
+            Icon="addgrocery.svg"
+            Route="GroceriesNewView" />
+    </FlyoutItem>
+    <FlyoutItem
+        x:Name="SettingsView"
+        Title="settings"
+        Icon="settings.svg"
+        IsEnabled="False"
+        IsVisible="False">
+        <ShellContent
+            Title="SYNC"
+            ContentTemplate="{DataTemplate settings:SettingsSynchronisationView}"
+            Icon="sync.svg"
+            Route="SettingsSynchronisationView" />
+        <ShellContent
+            Title="USER"
+            ContentTemplate="{DataTemplate settings:LogoutView}"
+            Icon="logout.svg"
+            Route="LogoutView" />
+    </FlyoutItem>
+    <FlyoutItem x:Name="LoginView" Icon="loginnew.png">
+        <ShellContent ContentTemplate="{DataTemplate settings:LoginView}" Route="LoginView" />
+    </FlyoutItem>
+
+</Shell>

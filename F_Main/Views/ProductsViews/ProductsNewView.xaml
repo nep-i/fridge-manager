@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="F_Main.Views.ProductsViews.ProductsNewView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:F_Framework.ViewModels.ProductsViewModels;assembly=F_Framework"
+    xmlns:title="clr-namespace:F_Main.CustomControllers"
+    x:DataType="model:ProductNewViewModel"
+    Background="{StaticResource PageColor}">
+
+    <!--<Border Grid.Column="1" Grid.Row="1"
+                            StrokeShape="RoundRectangle 5,5,5,5"
+                            Stroke="#C49B33"
+                            StrokeThickness="1"
+                            Padding="5"
+                            HorizontalOptions="Center"
+                            Margin="10">
+        <VerticalStackLayout BackgroundColor="Wheat">
+        </VerticalStackLayout>
+    </Border>-->
+    <Shell.TitleView>
+        <title:TitleViewControlller />
+    </Shell.TitleView>
+
+    <ContentPage.Content>
+        <Border
+            Margin="5"
+            Padding="5"
+            BackgroundColor="{StaticResource Yellow200Accent}"
+            HorizontalOptions="FillAndExpand"
+            MinimumHeightRequest="50"
+            MinimumWidthRequest="100"
+            Stroke="#C49B33"
+            StrokeShape="RoundRectangle 5,5,5,5"
+            StrokeThickness="1"
+            VerticalOptions="StartAndExpand">
+
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+
+                <Label
+                    Margin="10"
+                    FontAttributes="Bold"
+                    FontFamily="frmnr.ttf"
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    Text="Name the product" />
+                <Entry
+                    HorizontalOptions="Center"
+                    Text="{Binding Product.Name, Mode=TwoWay}"
+                    VerticalOptions="Center"
+                    WidthRequest="250" />
+                <Image
+                    HeightRequest="60"
+                    Source="{Binding Icon, Mode=TwoWay}"
+                    WidthRequest="60" />
+                <Button
+                    Margin="10"
+                    Padding="1"
+                    BackgroundColor="{StaticResource Yellow100Accent}"
+                    Command="{Binding ChoosingProductIconCommand}"
+                    FontFamily="frmnr.ttf"
+                    FontSize="14"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    Text="Pick an Icon"
+                    WidthRequest="150" />
+                <FlexLayout
+                    AlignItems="Center"
+                    HeightRequest="60"
+                    JustifyContent="SpaceBetween">
+                    <HorizontalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                        <Label
+                            Margin="10"
+                            FontAttributes="Bold"
+                            FontFamily="frmnr.ttf"
+                            FontSize="18"
+                            HorizontalOptions="Center"
+                            Text="Days for life" />
+                        <Entry
+                            FontFamily="frmnr.ttf"
+                            FontSize="14"
+                            HorizontalOptions="Center"
+                            Placeholder="1"
+                            Text="{Binding Product.DaysForLife, Mode=TwoWay}"
+                            VerticalOptions="Center"
+                            WidthRequest="50" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="frmnr.ttf"
+                            FontSize="18"
+                            Text="Type"
+                            VerticalOptions="Center"
+                            WidthRequest="50" />
+                        <Entry
+                            FontFamily="frmnr.ttf"
+                            FontSize="18"
+                            HorizontalOptions="Center"
+                            Text="{Binding Product.Type, Mode=TwoWay}"
+                            VerticalOptions="Center"
+                            WidthRequest="100" />
+                    </HorizontalStackLayout>
+                </FlexLayout>
+
+                <Button
+                    Margin="10"
+                    BackgroundColor="{StaticResource Yellow100Accent}"
+                    Command="{Binding ToCreateNewView}"
+                    FontFamily="frmnr.ttf"
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    Text="Create new product"
+                    VerticalOptions="Center"
+                    WidthRequest="250" />
+            </VerticalStackLayout>
+        </Border>
+    </ContentPage.Content>
+</ContentPage>

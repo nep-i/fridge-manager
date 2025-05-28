@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="F_Main.Views.ShopViews.ShopsNewView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:F_Framework.Models;assembly=F_Framework"
+    xmlns:title="clr-namespace:F_Main.CustomControllers"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:F_Framework.ViewModels.ShopsViewModels;assembly=F_Framework"
+    x:DataType="vm:ShopsNewViewModel"
+    Background="{StaticResource PageColor}">
+
+    <Shell.TitleView>
+        <title:TitleViewControlller />
+    </Shell.TitleView>
+
+    <ContentPage.Content>
+        <Border
+            Margin="5"
+            Padding="5"
+            BackgroundColor="{StaticResource Yellow200Accent}"
+            HorizontalOptions="FillAndExpand"
+            MinimumHeightRequest="50"
+            MinimumWidthRequest="100"
+            Stroke="#C49B33"
+            StrokeShape="RoundRectangle 5,5,5,5"
+            StrokeThickness="1"
+            VerticalOptions="StartAndExpand">
+
+            <VerticalStackLayout>
+                <Label
+                    Margin="10"
+                    FontAttributes="Bold"
+                    FontFamily="frmnr.ttf"
+                    FontSize="18"
+                    HorizontalOptions="Center"
+                    Text="Name the shop" />
+
+                <Entry
+                    Margin="1"
+                    FontAttributes="Bold"
+                    FontFamily="frmnr.ttf"
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    Text="{Binding Shop.Name, Mode=TwoWay}"
+                    VerticalOptions="Center"
+                    WidthRequest="150" />
+                <Button
+                    Margin="10"
+                    BackgroundColor="{StaticResource Yellow100Accent}"
+                    Command="{Binding ToCreateNewView}"
+                    FontFamily="frmnr.ttf"
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    Text="Create Shop"
+                    VerticalOptions="Center" />
+            </VerticalStackLayout>
+        </Border>
+    </ContentPage.Content>
+</ContentPage>
